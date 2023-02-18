@@ -235,7 +235,6 @@
     let success = document.getElementById("success")
     let v = localStorage.getItem("temp")
     if (v != null) {
-        // success.innerHTML = null
         log.style.fontSize = "30px"
         log.style.border = "none"
         log.style.textDecoration = "underline"
@@ -254,7 +253,7 @@
         log.setAttribute("href", "./login.html")
         signup.setAttribute("href", "signup.html")
     }
-    fetch("https://vast-gray-marlin-kilt.cyclic.app/")
+    fetch("https://tan-coati-belt.cyclic.app/app")
         .then(res => res.json())
         .then((res) => {
             createdata(res)
@@ -330,7 +329,7 @@
                 let data = {
                     id: el._id
                 }
-                fetch("http://localhost:4500/delete", {
+                fetch("https://tan-coati-belt.cyclic.app/app/delete", {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json"
@@ -361,7 +360,7 @@
                     }
                     console.log(name);
 
-                    fetch("http://localhost:4500/updating", {
+                    fetch("https://tan-coati-belt.cyclic.app/app/updating", {
                         method: "PATCH",
                         headers: {
                             "Content-Type": "application/json"

@@ -74,7 +74,7 @@
                     username: v,
                     tododata: tododata.value
                 }
-                fetch("http://localhost:4500/addtodo", {
+                fetch("https://tan-coati-belt.cyclic.app/app/addtodo", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -109,7 +109,7 @@
         let data = {
             username: v
         }
-        fetch("http://localhost:4500/gettodos", {
+        fetch("https://tan-coati-belt.cyclic.app/app/gettodos", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

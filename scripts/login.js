@@ -17,7 +17,7 @@ button.addEventListener("click", () => {
             username:email.value,
             password:password.value
         }
-        fetch("http://localhost:4500/login", {
+        fetch("https://tan-coati-belt.cyclic.app/app/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

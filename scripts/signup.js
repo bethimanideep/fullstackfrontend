@@ -34,7 +34,7 @@ last.addEventListener('click', () => {
         alert('Password length to short')
     }
     else {
-        fetch("https://vast-gray-marlin-kilt.cyclic.app/app/register", {
+        fetch("https://tan-coati-belt.cyclic.app/app/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
