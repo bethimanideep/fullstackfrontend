@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcure</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="short icon"
+        href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1ZXIjC0A26foPaSuQMz5FY2eFJ7LDX_wcww&usqp=CAU">
+</head>
+
+<body>
+    <div class="container">
+        <div id="fd">
+            <a href="index.html">
+                <img id="logo" src="https://i.ebayimg.com/images/g/-1EAAOSwkhJgjHii/s-l1600.png">
+            </a>
+        </div>
+        <div class="container1">
+            <div>
+                <a href="userdetails.html" style="text-decoration: none;">
+                    <p style="color: white;">Admin</p>
+                </a>
+            </div>
+            <div id="logindiv">
+                <a class="ba" id="log">LOGIN</a>
+            </div>
+            <div>
+                <a class="signup" id="sign">SIGNUP</a>
+            </div>
+        </div>
+    </div>
+    <div id="maintodo">
+        <div id="todonotes">
+        </div>
+        <div id="tododiv">
+            <div>
+                <form action="/action_page.php">
+                    <p><label for="w3review" style="color: wheat;">Add Todos:</label></p>
+                    <textarea id="tododata" name="w3review" rows="5" cols="50"></textarea>
+                    <br>
+                </form>
+            </div>
+            <div style="display: flex; align-items: center;">
+                <button id="btn" style="color: red;">UPDATE</button>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div id="success">
+
+    </div>
+</body>
+<script>
+    let ba = document.querySelector(".ba")
+    let signup = document.querySelector(".signup")
+    let log = document.getElementById("log")
+    let tododata = document.getElementById("tododata")
+    let todonotes = document.getElementById("todonotes")
+    let sign = document.getElementById("sign")
+    let btn = document.getElementById("btn")
+    let success = document.getElementById("success")
+    let v = localStorage.getItem("temp")
+
+    let logindiv = document.getElementById("logindiv")
+    btn.addEventListener("click", () => {
+        if (v !== null) {
+            if (tododata.value == "") {
+                alert("Write any todo")
+            } else {
+                let data = {
+                    username: v,
+                    tododata: tododata.value
+                }
+                fetch("http://localhost:4500/addtodo", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(res => res.json())
+                    .then((res) => {
+                        createdata(res);
+                    })
+                    .catch(err => console.log(err))
+            }
+
+        } else {
+            alert("Login or Register")
+        }
+    })
+    if (v != null) {
+        success.innerHTML = null
+        log.style.fontSize = "30px"
+        log.style.border = "none"
+        log.style.textDecoration = "underline"
+        log.style.color = "red"
+        log.innerHTML = v
+        log.setAttribute("href", "./userdetails.html")
+        signup.innerHTML = "LOGOUT"
+        sign.setAttribute("href", "./login.html")
+        signup.addEventListener("click", () => {
+            localStorage.clear()
+            window.location.href = "./index.html"
+        })
+        let data = {
+            username: v
+        }
+        fetch("http://localhost:4500/gettodos", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then((res) => {
+                createdata(res)
+            })
+            .catch(err => console.log(err))
+
+    } else {
+        ba.innerHTML = "LOGIN"
+        log.setAttribute("href", "./login.html")
+        signup.setAttribute("href", "signup.html")
+    }
+    function createdata(data) {
+        todonotes.innerHTML = null
+        todonotes.style.boxShadow = "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px"
+        todonotes.style.borderRadius = "10px"
+        todonotes.style.backgroundColor = "white"
+        todonotes.style.width = "30%"
+        todonotes.style.overflowWrap = "break-word"
+        todonotes.style.padding = "3%"
+
+        data.forEach(ele => {
+            let div = document.createElement("div")
+            let p = document.createElement("P")
+            p.innerText = `=>${ele}`
+            div.append(p)
+            todonotes.append(div)
+        });
+
+    }
+
+
+</script>
+
+</html>
