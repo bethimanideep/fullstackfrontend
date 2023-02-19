@@ -326,44 +326,45 @@
             tbody.append(tr)
 
             delbtn.addEventListener('click', () => {
-                if(v){
+                if (v) {
                     let data = {
-                    id: el._id
-                }
-                fetch("https://tan-coati-belt.cyclic.app/app/delete", {
-                    method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(data)
-                })
-                    .then(res => res.json())
-                    .then((res) => {
-                        alert("DELETE SUCESS")
-                        tbody.innerHTML = null
-                        createdata(res)
+                        id: el._id
+                    }
+                    fetch("https://tan-coati-belt.cyclic.app/app/delete", {
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(data)
                     })
-                    .catch(err => console.log(err))
-                }else{
+                        .then(res => res.json())
+                        .then((res) => {
+                            alert("DELETE SUCESS")
+                            tbody.innerHTML = null
+                            createdata(res)
+                        })
+                        .catch(err => console.log(err))
+                } else {
                     alert("Please login")
                 }
-                
+
             })
             submit.addEventListener('click', () => {
-                if (v===null) {
+                if (v === null) {
                     alert("Login first")
-                } else if(input.value == ""){
+                } else if (input.value == "") {
                     alert("provide input field")
                 }
-                else{
+                else {
                     let name = localStorage.getItem("temp")
-                    let token=localStorage.getItem("token")
+                    let token = localStorage.getItem("token")
+
                     let data = {
                         type: td10.value,
                         value: input.value,
                         id: el._id,
                         role: name,
-                        token:token
+                        token: token
                     }
 
                     fetch("https://tan-coati-belt.cyclic.app/app/updating", {
@@ -379,8 +380,10 @@
                                 alert("UPDATED SUCCESFULLY")
                                 tbody.innerHTML = null
                                 createdata(res)
-                                localStorage.clear()
-                                localStorage.setItem("temp", input.value)
+                                if (el.username === name) {
+                                    localStorage.clear()
+                                    window.location.href = "./login.html"
+                                }
                             } else if (res == "notanadmin") {
                                 alert("Needed Admin Permission")
                             }
