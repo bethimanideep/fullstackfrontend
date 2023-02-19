@@ -326,7 +326,8 @@
             tbody.append(tr)
 
             delbtn.addEventListener('click', () => {
-                let data = {
+                if(v){
+                    let data = {
                     id: el._id
                 }
                 fetch("https://tan-coati-belt.cyclic.app/app/delete", {
@@ -343,6 +344,10 @@
                         createdata(res)
                     })
                     .catch(err => console.log(err))
+                }else{
+                    alert("Please login")
+                }
+                
             })
             submit.addEventListener('click', () => {
                 if (v===null) {
