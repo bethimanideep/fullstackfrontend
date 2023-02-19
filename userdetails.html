@@ -352,13 +352,14 @@
                 }
                 else{
                     let name = localStorage.getItem("temp")
+                    let token=localStorage.getItem("token")
                     let data = {
                         type: td10.value,
                         value: input.value,
                         id: el._id,
-                        role: name
+                        role: name,
+                        token:token
                     }
-                    console.log(name);
 
                     fetch("https://tan-coati-belt.cyclic.app/app/updating", {
                         method: "PATCH",

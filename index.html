@@ -20,7 +20,7 @@
         </div>
         <div class="container1">
             <div>
-                <a href="userdetails.html" style="text-decoration: none;">
+                <a href="userdetails.html" id="admin" style="text-decoration: none;">
                     <p style="color: white;">Admin</p>
                 </a>
             </div>
@@ -63,16 +63,17 @@
     let btn = document.getElementById("btn")
     let success = document.getElementById("success")
     let v = localStorage.getItem("temp")
-
     let logindiv = document.getElementById("logindiv")
     btn.addEventListener("click", () => {
         if (v !== null) {
             if (tododata.value == "") {
                 alert("Write any todo")
             } else {
+                let token=localStorage.getItem("token")
                 let data = {
                     username: v,
-                    tododata: tododata.value
+                    tododata: tododata.value,
+                    token:token
                 }
                 fetch("https://tan-coati-belt.cyclic.app/app/addtodo", {
                     method: "POST",
@@ -83,7 +84,12 @@
                 })
                     .then(res => res.json())
                     .then((res) => {
-                        createdata(res);
+                        if(res=="tokenexpired"){
+                            alert("Invalid Token or Token expired [Login again]")
+                            window.location.href="./login.html"
+                        }else{
+                            createdata(res);
+                        }
                     })
                     .catch(err => console.log(err))
             }
@@ -99,12 +105,11 @@
         log.style.textDecoration = "underline"
         log.style.color = "red"
         log.innerHTML = v
-        log.setAttribute("href", "./userdetails.html")
+        log.setAttribute("href","./userdetails.html")
         signup.innerHTML = "LOGOUT"
         sign.setAttribute("href", "./login.html")
         signup.addEventListener("click", () => {
             localStorage.clear()
-            window.location.href = "./index.html"
         })
         let data = {
             username: v

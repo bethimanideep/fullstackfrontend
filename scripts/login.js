@@ -30,7 +30,8 @@ button.addEventListener("click", () => {
                 else if(res=="notmatched"){
                     alert("Incorrect Password")
                 }
-                else if(res=="matched"){
+                else if(res!=="register"&&res!=="notmatched"){
+                    localStorage.setItem("token",res)
                     localStorage.setItem("temp",data.username)
                     window.location.href="./index.html"
                 }
